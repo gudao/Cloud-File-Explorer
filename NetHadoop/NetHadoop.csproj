@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aliyun.OSS">
+      <HintPath>..\DLL\Aliyun.OSS.dll</HintPath>
+    </Reference>
     <Reference Include="HDFS">
       <HintPath>..\DLL\HDFS.dll</HintPath>
     </Reference>
@@ -51,8 +54,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileInfoModel.cs" />
+    <Compile Include="AliOSSForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AliOSSForm.Designer.cs">
+      <DependentUpon>AliOSSForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\ListViewNF.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Helper\ListViewHelper.cs" />
     <Compile Include="Helper\ConfigHelper.cs" />
+    <Compile Include="AliYunClient.cs" />
+    <Compile Include="IClient.cs" />
     <Compile Include="ProgressState.cs" />
     <Compile Include="FSClient.cs">
       <SubType>Code</SubType>
@@ -72,6 +87,9 @@
       <DependentUpon>SureDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Helper\SystemFileHelper.cs" />
+    <EmbeddedResource Include="AliOSSForm.resx">
+      <DependentUpon>AliOSSForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="HadoopForm.resx">
       <DependentUpon>HadoopForm.cs</DependentUpon>
     </EmbeddedResource>

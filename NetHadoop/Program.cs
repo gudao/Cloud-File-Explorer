@@ -14,7 +14,7 @@ namespace NetHadoop
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new HadoopForm());
+            Application.Run(new AliOSSForm());
         }
     }
 }

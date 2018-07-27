@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
+
 namespace NetHadoop
 {
     /// <summary>
@@ -264,4 +265,7 @@ namespace NetHadoop
             }
         }
     }
+
+
+   
 }

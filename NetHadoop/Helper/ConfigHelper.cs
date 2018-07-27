@@ -26,5 +26,14 @@ namespace NetHadoop
         /// </summary>
         public static readonly short HDFSREPLICATION = Convert.ToInt16(ConfigurationManager.AppSettings["HDFSREPLICATION"] ?? "3");
 
-        }
+
+        //阿里云OSS配置
+        public static readonly string AccessKeyId = "AccessKeyId";
+
+        public static readonly string AccessKeySecret = "AccessKeySecret";
+
+        public static readonly string Endpoint = "Endpoint";
+
+
+    }
 }
