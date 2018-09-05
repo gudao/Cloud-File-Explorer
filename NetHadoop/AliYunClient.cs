@@ -53,6 +53,7 @@ namespace NetHadoop
         {
             try
             {
+                
                 var ossObject = client.GetObject(BucketName, path);
                 if (ossObject != null)
                 {
@@ -66,6 +67,21 @@ namespace NetHadoop
             }
 
             return null;
+        }
+
+        public bool Exist(string path)
+        {
+            try
+            {
+                return client.DoesObjectExist(BucketName, path.TrimStart('/'));
+            }
+            catch (Exception ee)
+            {
+
+                logger.Error("DoesObjectExist Error:" + ee);
+            }
+
+            return false;
         }
 
         public List<FileInfoModel> GetFlolderList(BackgroundWorker worker, string path)
@@ -189,7 +205,7 @@ namespace NetHadoop
                         savePath = localRootPath + "/" + myfile.FileName + "/" + fileName;
                     }
                     //显示总进度
-                    worker.ReportProgress(pgPresent, new ProgressState() { CurrentTitle = fileName, CurrentCount = currentCount });
+                    worker.ReportProgress(pgPresent, new ProgressState() { CurrentTitle = fileName, CurrentCount = currentCount, totalCount = totalCount });
 
                     #region 是否存在
                     if (!sameOp)
@@ -286,7 +302,7 @@ namespace NetHadoop
                 currentCount++;
                 int pgPresent = (int)((double)currentCount / totalCount * 100);
                 //显示总进度
-                worker.ReportProgress(pgPresent, new ProgressState() { CurrentTitle = fileName, CurrentCount = currentCount });
+                worker.ReportProgress(pgPresent, new ProgressState() { CurrentTitle = fileName, CurrentCount = currentCount,totalCount=totalCount });
 
                 #region 是否存在
                 if (!sameOp)

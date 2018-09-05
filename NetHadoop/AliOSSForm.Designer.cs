@@ -39,6 +39,7 @@
             this.mytoolbar = new System.Windows.Forms.ToolStrip();
             this.btNewFlolder = new System.Windows.Forms.ToolStripButton();
             this.btUp = new System.Windows.Forms.ToolStripButton();
+            this.tbBucketName = new System.Windows.Forms.ToolStripComboBox();
             this.tbAddress = new System.Windows.Forms.ToolStripComboBox();
             this.tbSearch = new System.Windows.Forms.ToolStripTextBox();
             this.listMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -54,9 +55,9 @@
             this.MenuItemPaste = new System.Windows.Forms.ToolStripMenuItem();
             this.menuDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.lvFiles = new System.Windows.Forms.ListViewNF();
-            this.tbBucketName = new System.Windows.Forms.ToolStripComboBox();
             this.menuOutFileList = new System.Windows.Forms.ToolStripMenuItem();
+            this.lvFiles = new System.Windows.Forms.ListViewNF();
+            this.menuListDownload = new System.Windows.Forms.ToolStripMenuItem();
             this.mystatusbar.SuspendLayout();
             this.mytoolbar.SuspendLayout();
             this.listMenu.SuspendLayout();
@@ -150,6 +151,12 @@
             this.btUp.Text = "上一级";
             this.btUp.Click += new System.EventHandler(this.btUp_Click);
             // 
+            // tbBucketName
+            // 
+            this.tbBucketName.Name = "tbBucketName";
+            this.tbBucketName.Size = new System.Drawing.Size(100, 25);
+            this.tbBucketName.SelectedIndexChanged += new System.EventHandler(this.tbBucketName_SelectedIndexChanged);
+            // 
             // tbAddress
             // 
             this.tbAddress.MaxDropDownItems = 15;
@@ -173,6 +180,7 @@
             this.MenuItemReName,
             this.menuRefresh,
             this.toolStripSeparator1,
+            this.menuListDownload,
             this.menuDownload,
             this.menuUpload,
             this.MenuItemUploadFloder,
@@ -183,7 +191,7 @@
             this.toolStripSeparator3,
             this.menuOutFileList});
             this.listMenu.Name = "listMenu";
-            this.listMenu.Size = new System.Drawing.Size(180, 242);
+            this.listMenu.Size = new System.Drawing.Size(180, 286);
             // 
             // menuNewFolder
             // 
@@ -274,6 +282,14 @@
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(176, 6);
             // 
+            // menuOutFileList
+            // 
+            this.menuOutFileList.Name = "menuOutFileList";
+            this.menuOutFileList.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.menuOutFileList.Size = new System.Drawing.Size(179, 22);
+            this.menuOutFileList.Text = "导出列表";
+            this.menuOutFileList.Click += new System.EventHandler(this.menuOutFileList_Click);
+            // 
             // lvFiles
             // 
             this.lvFiles.ContextMenuStrip = this.listMenu;
@@ -291,19 +307,12 @@
             this.lvFiles.KeyUp += new System.Windows.Forms.KeyEventHandler(this.lvFiles_KeyUp);
             this.lvFiles.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvFiles_MouseDoubleClick);
             // 
-            // tbBucketName
+            // menuListDownload
             // 
-            this.tbBucketName.Name = "tbBucketName";
-            this.tbBucketName.Size = new System.Drawing.Size(100, 25);
-            this.tbBucketName.SelectedIndexChanged += new System.EventHandler(this.tbBucketName_SelectedIndexChanged);
-            // 
-            // menuOutFileList
-            // 
-            this.menuOutFileList.Name = "menuOutFileList";
-            this.menuOutFileList.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.menuOutFileList.Size = new System.Drawing.Size(179, 22);
-            this.menuOutFileList.Text = "导出列表";
-            this.menuOutFileList.Click += new System.EventHandler(this.menuOutFileList_Click);
+            this.menuListDownload.Name = "menuListDownload";
+            this.menuListDownload.Size = new System.Drawing.Size(179, 22);
+            this.menuListDownload.Text = "根据列表下载";
+            this.menuListDownload.Click += new System.EventHandler(this.menuListDownload_Click);
             // 
             // AliOSSForm
             // 
@@ -356,6 +365,7 @@
         private System.Windows.Forms.ToolStripStatusLabel lbTotalCount;
         private System.Windows.Forms.ToolStripComboBox tbBucketName;
         private System.Windows.Forms.ToolStripMenuItem menuOutFileList;
+        private System.Windows.Forms.ToolStripMenuItem menuListDownload;
     }
 }
 

@@ -500,51 +500,10 @@ namespace NetHadoop
                 }
             }
         }
-        /// <summary>
-        /// 根据订单 或右键下载
-        /// </summary>
-        /// <param name="pathList">key:文件名，value:主题名</param>
-        /// <param name="outFamate">导出格式</param>
-        /// <param name="fileType">以什么为文件名，0文件名，1主题名，2主题文件夹</param>
-        public void DownLoadFile(Dictionary<string, string> pathList, string outFamate, int fileType)
-        {
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-            fbd.ShowNewFolderButton = true;
-            fbd.Description = "请选择一个文件夹存放导出的视频文件。";
-
-            //选择保存文件夹
-            if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                worker.DoWork += new DoWorkEventHandler(DoDownLoadWork);
-                worker.ProgressChanged += new ProgressChangedEventHandler(ProgessChanged);
-                worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(CompleteDownLoadWork);
-
-                List<FileInfoModel> fileList = new List<FileInfoModel>();
-
-
-                List<string> noFound = new List<string>();
-                foreach (string filePath in pathList.Keys)
-                {
-                    FileInfoModel myfile = client.GetFileStatus(ConfigHelper.HdfsRoot + "/" + CurrentPath + "/" + filePath + outFamate);
-                    if (myfile != null)
-                    {
-                        myfile.FileName = pathList[filePath] + outFamate;
-                        fileList.Add(myfile);
-                    }
-                    else
-                    {
-                        noFound.Add(filePath);
-                    }
-                }
-                string nofoundTitle = string.Format("以下{0}个文件没有找到，请核实：\r\n{1}\r\n===结束===", noFound.Count, string.Join("\r\n", noFound.ToArray()));
-                File.WriteAllText(fbd.SelectedPath + "/NoFound.txt", nofoundTitle);
-
-                worker.RunWorkerAsync(new DownloadArgs() { FileList = fileList, SavePath = fbd.SelectedPath, OutFileType = fileType });
-            }
-        }
+        
 
         //根据导入列表下载
-        public void DownLoadFile(List<string> pathList, string outFamate)
+        public void DownLoadFile(List<string> pathList)
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             fbd.ShowNewFolderButton = true;
@@ -564,8 +523,9 @@ namespace NetHadoop
 
                 foreach (string filePath in pathList)
                 {
-                    var myfile = client.GetFileStatus(ConfigHelper.HdfsRoot + "/" + CurrentPath + "/" + filePath + outFamate);
-                    if (myfile != null)
+                    var myfile = new FileInfoModel() { FileName = filePath, Path =  CurrentPath.TrimStart('/') +  filePath };
+
+                    if (client.Exist(myfile.Path))
                     {
                         fileList.Add(myfile);
                     }
@@ -613,7 +573,7 @@ namespace NetHadoop
             try
             {
                 DialogResult result = openFileDialog1.ShowDialog();
-                if (result == DialogResult.OK && openFileDialog1.FileNames.Length < 101)
+                if (result == DialogResult.OK /*&& openFileDialog1.FileNames.Length < 101*/)
                 {
                     return fileNames = openFileDialog1.FileNames;
                 }
@@ -861,6 +821,24 @@ namespace NetHadoop
         {
             btDownLoad_Click(sender, e);
         }
+        //右键 批量下载
+        private void menuListDownload_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.RestoreDirectory = true;
+            openFileDialog1.CheckFileExists = false;
+            DialogResult result = openFileDialog1.ShowDialog();
+            if (result == DialogResult.OK )
+            {
+               string  fileName = openFileDialog1.FileName;
+                List<string> fileNameList = new List<string>();
+                fileNameList.AddRange(File.ReadAllLines(fileName));
+
+                DownLoadFile(fileNameList);
+
+            }
+
+        }
         //右键 上传
         private void menuUpload_Click(object sender, EventArgs e)
         {
@@ -921,7 +899,7 @@ namespace NetHadoop
             client.BucketName = tbBucketName.SelectedItem.ToString();
         }
 
-        
+
     }
     #region 辅助类
     internal class DownloadArgs
