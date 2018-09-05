@@ -507,6 +507,7 @@ namespace NetHadoop
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             fbd.ShowNewFolderButton = true;
+
             fbd.Description = "请选择一个文件夹存放导出的视频文件。";
 
             //选择保存文件夹

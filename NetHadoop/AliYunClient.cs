@@ -249,7 +249,7 @@ namespace NetHadoop
                         long totalBytes = 0;
                         using (var fs = File.Open(savePath, FileMode.OpenOrCreate))
                         {
-                            int length = 4 * 1024;
+                            int length = 40 * 1024;
                             var buf = new byte[length];
                             do
                             {
@@ -258,15 +258,15 @@ namespace NetHadoop
 
                                 totalBytes += length;
                                 int mypresent = (int)((double)totalBytes / myfile.Size * 100);
-                                worker.ReportProgress(pgPresent, new ProgressState() { CurrentTitle = mypresent + "% " + fileName });
+                                //worker.ReportProgress(pgPresent, new ProgressState() { CurrentTitle = mypresent + "% " + fileName });
 
                             } while (length != 0);
-
+                            buf = null;
                             result = true;
                         }
                     }
 
-
+                    ossObj = null;
                     #endregion
 
                     string msg = string.Format("{0} 下载{1}", Path.GetFileName(fileName), result ? "成功" : "失败");
