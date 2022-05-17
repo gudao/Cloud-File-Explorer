@@ -160,5 +160,6 @@ pip-log.txt
 .mr.developer.cfg
 
 # Mac crap
-.DS_Store
-/.vs/NetHadoop/v15/Server/sqlite3
+.DS_Store 
+/.vs/*
+*/setting.dev.ini
